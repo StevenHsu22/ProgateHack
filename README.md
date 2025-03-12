@@ -1,1 +1,1 @@
-"# ProgateHack" 
+頑張るぞ
