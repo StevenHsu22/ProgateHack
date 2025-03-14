@@ -1,9 +1,10 @@
 import Image from 'next/image';
-import { LoginForm } from './auth/login/page';
+import { LoginForm } from '@/components/pages/loginForm';
+import LoginButton from '@/components/molecule/loginButton';
 export default function Home() {
   return (
     <div>
-      <LoginForm />
+      <LoginButton />
     </div>
   );
 }
