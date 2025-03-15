@@ -1,11 +1,9 @@
 import { Button } from '../ui/button';
 
-const LoginButton = () => {
+export const LoginButton = () => {
   return (
     <Button>
       <a href='/auth/login/'>Login</a>
     </Button>
   );
 };
-
-export default LoginButton;
