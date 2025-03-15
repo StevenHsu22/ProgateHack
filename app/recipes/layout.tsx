@@ -1,11 +1,11 @@
 import React from 'react';
 import { Navbar } from '@/components/molecule/navbar';
 
-interface IngredientsLayoutProps {
+interface RecipesLayoutProps {
   children: React.ReactNode;
 }
 
-const IngredientsLayout = ({ children }: IngredientsLayoutProps) => {
+const RecipesLayout = ({ children }: RecipesLayoutProps) => {
   return (
     <div>
       <Navbar />
@@ -14,4 +14,4 @@ const IngredientsLayout = ({ children }: IngredientsLayoutProps) => {
   );
 };
 
-export default IngredientsLayout;
+export default RecipesLayout;
