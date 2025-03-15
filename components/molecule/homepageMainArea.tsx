@@ -6,7 +6,7 @@ const HomePageMainArea = () => {
       <div className='w-3/4 max-w-6xl px-4'>
         <div className='grid grid-cols-2 gap-6'>
           <div className='col-span-1 h-[600px]'>
-            <HomePageMenu href='/ingredients'>
+            <HomePageMenu href='/ingredients/'>
               <h1>在庫確認</h1>
             </HomePageMenu>
           </div>
