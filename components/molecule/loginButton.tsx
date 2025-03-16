@@ -2,8 +2,8 @@ import { Button } from '../ui/button';
 
 export const LoginButton = () => {
   return (
-    <Button>
-      <a href='/auth/login/'>Login</a>
+    <Button className=' w-32'>
+      <a href='/auth/login/'>ログイン</a>
     </Button>
   );
 };
