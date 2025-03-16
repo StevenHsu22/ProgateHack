@@ -7,7 +7,7 @@ const HomePageHeader: React.FC = () => {
       <h1 className='text-3xl text-neutral-800'>
         <span className='text-[#248aef]'>ラスト</span>バイト
       </h1>
-      <nav className='flex gap-10 self-start mt-2 text-xl text-black whitespace-nowrap'>
+      <nav className='flex gap-5 self-start  text-xl text-black whitespace-nowrap'>
         <LoginButton />
         <SignupButton />
       </nav>
