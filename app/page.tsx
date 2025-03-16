@@ -1,11 +1,8 @@
-import Image from 'next/image';
-import { Navbar } from '@/components/molecule/navbar';
-import HomePageMainArea from '@/components/molecule/homepageMainArea';
+import HomePage from '@/components/pages/HomePage';
 export default function Home() {
   return (
     <div className='h-screen'>
-      <Navbar />
-      <HomePageMainArea />
+      <HomePage />
     </div>
   );
 }
