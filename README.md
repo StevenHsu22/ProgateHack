@@ -29,20 +29,26 @@ progatehack/
 ├── app/
 │　（フロントエンド）
 │   ├── layout.tsx          // 全体の共通レイアウト（ヘッダー、フッター、認証チェックなど）
-│   ├── page.tsx            // ダッシュボード（トップページ）
+│   ├── page.tsx            // home ページ
 │   ├── globals.css         // 全体の共通css
 │   ├── auth/
 │   │   ├── login/
 │   │   │   └── page.tsx    // ログインページ
-│   │   ├── register/
-│   │   │   └── page.tsx    // ユーザー登録ページ
-│   ├── ingredients/
-│   │   ├── layout.tsx      // 食材管理専用のレイアウト（食材一覧や追加・編集機能に共通のUI）
-│   │   ├── page.tsx        // 食材一覧ページ：登録済みの食材を一覧表示し、期限切れ警告なども表示
-│   │   └── add/
-│   │       └── page.tsx    // 食材追加ページ
-│   ├── recipes/
-│   │   └── page.tsx        // レシピ提案ページ：現在の食材情報に基づき、AIがレシピを提案
+│   │   └── register/
+│   │       └── page.tsx    // ユーザー登録ページ
+│   ├── user/					 
+│   │   ├── layout.tsx      // ダッシュボードや食材一覧や追加・編集機能に共通のUI
+│   │   ├── page.tsx        // 登録後ページ
+│   │   ├── dashboard/
+│   │   │   └── page.tsx
+│   │   ├── ingredients/
+│   │   │   └── page.tsx    // 食材一覧＆管理ページ：追加・編集機能（モーダル）、登録済みの食材を一覧表示し、期限切れ警告なども表示
+│   │   ├── preferences/
+│   │   │   └── page.tsx    // 料理の好みページ
+│   │   ├── recipes/
+│   │   │   └── page.tsx    // レシピの提案ページ
+│   │   └── settings/
+│   │       └── page.tsx    // ユーザー設定
 │   │
 │　（バックエンド）
 │   └── api/
@@ -67,6 +73,14 @@ progatehack/
 │               └── route.ts    // GET /api/recipes/:recipeId（個別レシピ詳細）
 │
 │　（他の）
+├── components/
+│   ├── atom/                   // 
+│   ├── molecule/               // 
+│   │   ├── homepage/           // 
+│   │   └── userpage/           // 
+│   ├── pages/                  // 
+│   └── ui/                     // 
+│
 ├── public/
 │   ├── fonts/              // すべてのフォント
 │   │   └── xx.ttf
