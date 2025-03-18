@@ -41,6 +41,9 @@ export const UserSidebarMenu = () => {
               <item.icon className='w-5 h-5' />
               <span>{item.title}</span>
             </div>
+            {item.title === 'ダッシュボード' && (
+              <div className='border-t mx-3 my-2'></div>
+            )}
           </Link>
         ))}
       </nav>
