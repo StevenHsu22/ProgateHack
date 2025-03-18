@@ -1,6 +1,6 @@
 import React from 'react';
 import { LoginButton } from '../loginButton';
-import { SignupButton } from '../sinupButton';
+import { SignupButton } from '../signupButton';
 const HomePageHeader: React.FC = () => {
   return (
     <header className='flex flex-wrap gap-5 justify-between self-center w-full font-extrabold max-w-4/5 max-md:max-w-max'>
