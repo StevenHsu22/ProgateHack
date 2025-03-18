@@ -8,12 +8,11 @@ interface UserPageLayoutProps {
 }
 
 const UserPageLayout = ({ children }: UserPageLayoutProps) => {
-
   return (
     <div className='flex h-screen'>
-      <UserSidebarMenu/>
+      <UserSidebarMenu />
       <div className='flex flex-col flex-1'>
-        <UserPageHeader/>
+        <UserPageHeader />
         <main className='flex-1 p-6 bg-gray-100'>{children}</main>
       </div>
     </div>
