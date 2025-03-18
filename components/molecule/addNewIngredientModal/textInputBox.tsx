@@ -1,16 +1,26 @@
 import { Input } from '@/components/ui/input';
 
-import { IngredientUnitType } from '@/types/ingredientUnitType';
+type inputType = 'text' | 'number' | 'date';
+
 interface TextInputBoxProps {
   label: string;
   placeholder: string;
+  type: inputType;
 }
 
-export const InputBox = ({ label, placeholder }: TextInputBoxProps) => {
+export const TextInputBox = ({
+  label,
+  placeholder,
+  type,
+}: TextInputBoxProps) => {
   return (
-    <div className='flex flex-col gap-1 w-xl'>
+    <div className='flex flex-col gap-1 '>
       <label className=' font-bold text-xl'>{label}</label>
-      <Input placeholder={placeholder} />
+      <Input
+        placeholder={placeholder}
+        type={type}
+        className=' hover:border-blue-300'
+      />
     </div>
   );
 };
