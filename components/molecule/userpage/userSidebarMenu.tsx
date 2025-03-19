@@ -16,7 +16,7 @@ export const UserSidebarMenu = () => {
   const pathname = usePathname();
 
   return (
-    <aside className='flex flex-col h-screen bg-white shadow-lg w-52'>
+    <aside className='flex flex-col h-screen bg-white shadow-lg'>
       {/* Logo + Toggle */}
       <div className='flex items-center justify-center p-4 mt-4'>
         <Link href='/'>
