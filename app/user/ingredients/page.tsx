@@ -86,7 +86,7 @@ const IngredientsPage = () => {
       <div className=' w-full h-full'>
         {isOpen && <AddNewIngredientModal onClose={() => setIsOpen(false)} />}
         <div className='flex flex-col h-full w-full'>
-          <div className='w-full h-4/5 overflow-scroll '>
+          <div className='w-full h-4/5'>
             <IngredientsTable ingredients={tableShowData} />
           </div>
           <footer className='w-full h-1/5 flex justify-end gap-3 items-center'>

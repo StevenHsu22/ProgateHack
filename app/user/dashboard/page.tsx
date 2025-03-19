@@ -1,7 +1,6 @@
-import { PageContainer } from '@/components/atom/pageContainer';
 import DashboardPage from '@/components/pages/DashboardPage';
 
-const DashboradPage = () => {
+const Dashboard = () => {
   return (
     <div className='w-full max-w-7xl px-6'>
       <DashboardPage />
@@ -9,4 +8,4 @@ const DashboradPage = () => {
   );
 };
 
-export default DashboradPage;
+export default Dashboard;

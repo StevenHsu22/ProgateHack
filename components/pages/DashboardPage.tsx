@@ -1,9 +1,9 @@
 'use client';
 
-import UserDashboardCard from '../molecule/userpage/dashboard/userDashboardCard';
-import UserDashboardTrendChart from '../molecule/userpage/dashboard/userDashboardTrendChart';
-import UserDashboardRankList from '../molecule/userpage/dashboard/userDashboardRankList';
-import UserDashboardPieChart from '../molecule/userpage/dashboard/userDashboardPieChart';
+import UserDashboardCard from '../molecule/dashboard/userDashboardCard';
+import UserDashboardTrendChart from '../molecule/dashboard/userDashboardTrendChart';
+import UserDashboardRankList from '../molecule/dashboard/userDashboardRankList';
+import UserDashboardPieChart from '../molecule/dashboard/userDashboardPieChart';
 
 export default function DashboardPage() {
   return (
