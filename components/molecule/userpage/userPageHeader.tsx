@@ -5,7 +5,7 @@ import { Search, Bell } from 'lucide-react';
 
 export function UserPageHeader() {
   return (
-    <header className='flex items-center justify-between px-6 py-4 bg-white shadow-sm'>
+    <header className='flex items-center justify-between px-6 py-4 bg-white shadow-sm h-1/6'>
       <div className='flex-1 max-w-md mx-8'>
         <div className='relative'>
           <Search className='absolute left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-500' />

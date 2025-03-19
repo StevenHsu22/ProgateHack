@@ -4,6 +4,7 @@ import { Plus } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { AddNewIngredientModal } from '@/components/pages/modal/addNewIngredientModal';
+import { IngredientsTable } from '@/components/molecule/Ingredients/ingredientsTable';
 
 const IngredientsPage = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,6 +27,12 @@ const IngredientsPage = () => {
       <div className='border-t mx-3 my-2'></div>
       <div className=' w-full h-full'>
         {isOpen && <AddNewIngredientModal onClose={() => setIsOpen(false)} />}
+        <div className='flex flex-col h-full w-full'>
+          <div className='w-full h-4/5 overflow-scroll'>
+            <IngredientsTable />
+          </div>
+          <footer className='w-full h-1/5'></footer>
+        </div>
       </div>
     </div>
   );
