@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { Plus } from 'lucide-react';
+import { Plus, Trash2 } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { AddNewIngredientModal } from '@/components/pages/modal/addNewIngredientModal';
@@ -14,9 +14,14 @@ const IngredientsPage = () => {
       <div className='flex justify-between'>
         <h1 className='text-2xl font-bold w-1/3 pl-4'>食材管理</h1>
         <span className='pr-4 '>
+          <Button className=' hover:cursor-pointer bg-red-400 hover:bg-red-700 text-white size-12 w-18 mr-1'>
+            <div className='flex items-center gap-1'>
+              <Trash2 />
+            </div>
+          </Button>
           <Button
             onClick={() => setIsOpen(true)}
-            className=' hover:cursor-pointer bg-blue-400 hover:bg-blue-200 text-white size-12 w-18'
+            className=' hover:cursor-pointer bg-blue-400 hover:bg-blue-800 text-white size-12 w-18'
           >
             <div className='flex items-center gap-1'>
               <Plus /> ADD
