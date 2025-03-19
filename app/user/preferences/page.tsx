@@ -1,6 +1,6 @@
 import { PageContainer } from '@/components/atom/pageContainer';
 
-const PreferencesPage = () => {
+const Preferences = () => {
   return (
     <PageContainer>
       <div className='w-3/4 max-w-6xl px-4'>
@@ -10,4 +10,4 @@ const PreferencesPage = () => {
   );
 };
 
-export default PreferencesPage;
+export default Preferences;

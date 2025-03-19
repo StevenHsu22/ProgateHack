@@ -7,7 +7,8 @@ import { Menu, Home, Settings, BookOpen, PlusSquare } from 'lucide-react';
 const menuItems = [
   { title: 'ダッシュボード', icon: Home, href: '/user/dashboard' },
   { title: '食材管理', icon: BookOpen, href: '/user/ingredients' },
-  { title: 'レシピ提案', icon: PlusSquare, href: '/user/recipes' },
+  { title: '提案カート', icon: PlusSquare, href: '/user/cart' },
+  { title: 'レシピ提案結果', icon: BookOpen, href: '/user/recipes' },
   { title: '料理の好み', icon: BookOpen, href: '/user/preferences' },
 ];
 
