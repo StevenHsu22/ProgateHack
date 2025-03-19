@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   Table,
   TableBody,
@@ -12,32 +13,10 @@ import { cn } from '@/lib/utils';
 import { Ingredient } from '@/types/ingredients';
 import { IngredientsTableRow } from './ingredientsTableRow';
 import { randomInt } from 'crypto';
+import { Button } from '@/components/ui/button';
 
-const dummyData = [] as Ingredient[];
-
-for (let i = 0; i < 10; i++) {
-  dummyData.push({
-    id: i.toString(),
-    name: 'トマト',
-    quantity: 1,
-    unit: '個',
-    expirationDate: new Date('2022-12-31'),
-    createdAt: new Date(),
-    category: '野菜',
-    status: 'active',
-  });
-}
-for (let i = 11; i < 20; i++) {
-  dummyData.push({
-    id: i.toString(),
-    name: '牛肉',
-    quantity: 1,
-    unit: '個',
-    expirationDate: new Date('2022-12-31'),
-    createdAt: new Date(),
-    category: '肉',
-    status: 'active',
-  });
+interface IngredientsTableProps {
+  ingredients: Ingredient[];
 }
 
 const categoryColor = (ingredient: Ingredient) => {
@@ -61,7 +40,7 @@ const categoryColor = (ingredient: Ingredient) => {
   }
 };
 
-export const IngredientsTable = () => {
+export const IngredientsTable = ({ ingredients }: IngredientsTableProps) => {
   return (
     <Table className='w-full '>
       <TableHeader className='text-center'>
@@ -74,7 +53,7 @@ export const IngredientsTable = () => {
         </TableRow>
       </TableHeader>
       <TableBody className='text-center w-full'>
-        {dummyData.map((ingredient) => (
+        {ingredients.map((ingredient) => (
           <TableRow key={ingredient.id}>
             <TableCell className='font-bold'>{ingredient.name}</TableCell>
             <TableCell>{ingredient.quantity}</TableCell>
@@ -93,7 +72,6 @@ export const IngredientsTable = () => {
           </TableRow>
         ))}
       </TableBody>
-      <TableFooter></TableFooter>
     </Table>
   );
 };
