@@ -2,8 +2,11 @@
 
 import Image from 'next/image';
 import { Search, Bell } from 'lucide-react';
+import { useSession } from 'next-auth/react';
 
 export function UserPageHeader() {
+  const { data: session } = useSession();
+
   return (
     <header className='flex items-center justify-between px-6 py-4 bg-white shadow-sm h-1/6'>
       <div className='flex-1 max-w-md mx-8'>
@@ -26,8 +29,10 @@ export function UserPageHeader() {
           className='rounded-full'
         />
         <div className='text-sm'>
-          <div className='font-semibold'>サメチーム</div>
-          <div className='text-gray-500 text-xs'>Admin</div>
+          <div className='font-semibold'>{session?.user?.name || 'ゲスト'}</div>
+          <div className='text-gray-500 text-xs'>
+            {session?.user?.email || '未ログイン'}
+          </div>
         </div>
       </div>
     </header>
