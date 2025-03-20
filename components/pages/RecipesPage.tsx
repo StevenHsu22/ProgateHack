@@ -212,7 +212,7 @@ const RecipesPage = () => {
           </AlertDialogContent>
         </AlertDialog>
 
-        <div className='bg-white rounded-lg shadow-md overflow-hidden'>
+        <div className=''>
           <RecipesTable
             recipes={displayedRecipes}
             onRemove={handleRemoveRecipe}

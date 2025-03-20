@@ -35,7 +35,7 @@ export const CartFilter = ({ onApplyFilter }: CartFilterProps) => {
   };
 
   return (
-    <div className='bg-white rounded-lg shadow-md p-4'>
+    <div className='p-4'>
       {/* Top row with 4 filters */}
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-4'>
         <div className='p-2 bg-gray-20 rounded'>
@@ -93,8 +93,8 @@ export const CartFilter = ({ onApplyFilter }: CartFilterProps) => {
           </select>
         </div>
       </div>
-  
-        {/* Bottom row with 2 filters */}
+
+      {/* Bottom row with 2 filters */}
       <div className='flex flex-col sm:flex-row gap-4 items-center'>
         <div className='p-2 bg-gray-20 rounded flex-grow'>
           <div className='text-sm font-medium mb-2'>提案の名前</div>

@@ -153,7 +153,7 @@ const CartPage = () => {
           </AlertDialogContent>
         </AlertDialog>
 
-        <div className='bg-white rounded-lg shadow-md overflow-hidden'>
+        <div className='bg-white overflow-hidden'>
           <IngredientsTable
             ingredients={displayedIngredients}
             onRemove={handleRemoveIngredient}
