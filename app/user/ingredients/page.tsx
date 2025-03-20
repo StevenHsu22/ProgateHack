@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { useAtomValue } from 'jotai';
+import { useAtom } from 'jotai';
 
 import { Plus, Trash2, ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -10,6 +10,7 @@ import { IngredientsTable } from '@/components/molecule/Ingredients/ingredientsT
 import { Ingredient } from '@/types/ingredients';
 
 import { selectedIngredientCartState } from '@/store/selectedIngredientCartState';
+import Link from 'next/link';
 
 const dummyData = [] as Ingredient[];
 
@@ -43,7 +44,9 @@ const IngredientsPage = () => {
   const [tableDataIndex, setTableDataIndex] = useState(0);
   const [tableShowData, setTableShowData] = useState([] as Ingredient[]);
 
-  const selectedIngredients = useAtomValue(selectedIngredientCartState);
+  const [selectedIngredients, setSelectedIngredients] = useAtom(
+    selectedIngredientCartState
+  );
 
   let numPerPage = 10;
   const handleNext = () => {
@@ -64,6 +67,10 @@ const IngredientsPage = () => {
     );
   };
 
+  const clearAll = () => {
+    setSelectedIngredients([]);
+  };
+
   useEffect(() => {
     updateTableShowData(tableDataIndex);
     console.log(selectedIngredients);
@@ -79,16 +86,16 @@ const IngredientsPage = () => {
               <span className='text-sm text-gray-500'>
                 {selectedIngredients.length} 点選択中
               </span>
+              <Button
+                className=' hover:cursor-pointer bg-gray-400 hover:bg-gray-600 text-white size-12 w-18 mr-1'
+                onClick={clearAll}
+              >
+                <div className='flex items-center gap-1 font-bold'>Clear</div>
+              </Button>
               <Button className=' hover:cursor-pointer bg-red-400 hover:bg-red-700 text-white size-12 w-18 mr-1'>
                 <div className='flex items-center gap-1'>
                   <Trash2 />
                 </div>
-              </Button>
-              <Button
-                onClick={() => setIsOpen(true)}
-                className=' hover:cursor-pointer bg-blue-400 hover:bg-blue-800 text-white size-12 w-22'
-              >
-                レシピ提案
               </Button>
             </div>
           ) : (
@@ -96,7 +103,7 @@ const IngredientsPage = () => {
               onClick={() => setIsOpen(true)}
               className=' hover:cursor-pointer bg-blue-400 hover:bg-blue-800 text-white size-12 w-18'
             >
-              <div className='flex items-center gap-1'>
+              <div className='flex items-center gap-1 font-bold'>
                 <Plus /> ADD
               </div>
             </Button>
@@ -110,19 +117,27 @@ const IngredientsPage = () => {
           <div className='w-full h-4/5'>
             <IngredientsTable ingredients={tableShowData} />
           </div>
-          <footer className='w-full h-1/5 flex justify-end gap-3 items-center'>
+          <footer className='w-full h-1/5 flex flex-col justify-end gap-3 items-center'>
+            <div className='w-full flex justify-end items-center gap-2'>
+              <Button
+                className='bg-gray-400 cursor-pointer hover:bg-gray-500'
+                onClick={handlePrev}
+              >
+                <ChevronLeft />
+              </Button>
+              <span className='w-2.5'>{tableDataIndex + 1}</span>
+              <Button
+                className='bg-gray-400 cursor-pointer hover:bg-gray-500'
+                onClick={handleNext}
+              >
+                <ChevronRight />
+              </Button>
+            </div>
             <Button
-              className='bg-gray-400 cursor-pointer hover:bg-gray-500'
-              onClick={handlePrev}
+              disabled={selectedIngredients.length === 0}
+              className=' hover:cursor-pointer bg-blue-400 hover:bg-blue-800 text-white size-12 w-22 font-bold'
             >
-              <ChevronLeft />
-            </Button>
-            <span className='w-2.5'>{tableDataIndex + 1}</span>
-            <Button
-              className='bg-gray-400 cursor-pointer hover:bg-gray-500'
-              onClick={handleNext}
-            >
-              <ChevronRight />
+              <Link href='/user/cart/'>レシピ提案</Link>
             </Button>
           </footer>
         </div>

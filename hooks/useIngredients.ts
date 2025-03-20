@@ -1,4 +1,3 @@
-import { Ingredient } from '@/types/ingredients';
 import { selectedIngredientCartState } from '@/store/selectedIngredientCartState';
 import { useAtom } from 'jotai';
 
