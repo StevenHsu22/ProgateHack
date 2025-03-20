@@ -89,11 +89,11 @@ const CartPage = () => {
           <div className='p-4 border-t flex justify-between items-center text-sm text-gray-500'>
             <span>
               {ingredients.length > 0
-                ? `${(currentPage - 1) * itemsPerPage + 1}-${Math.min(
+                ? `${ingredients.length} 件中 ${(currentPage - 1) * itemsPerPage + 1}-${Math.min(
                     currentPage * itemsPerPage,
                     ingredients.length
-                  )} 件中 ${ingredients.length} 件を表示`
-                : '表示するレシピがありません'}
+                  )} 件を表示`
+                : '表示する食材がありません'}
             </span>
             <div className='flex space-x-2'>
               <button

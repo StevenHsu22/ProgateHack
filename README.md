@@ -43,10 +43,12 @@ progatehack/
 │   │   │   └── page.tsx
 │   │   ├── ingredients/
 │   │   │   └── page.tsx    // 食材一覧＆管理ページ：追加・編集機能（モーダル）、登録済みの食材を一覧表示し、期限切れ警告なども表示
+│   │   ├── cart/           
+│   │   │   └── page.tsx    // レシピ提案前の設定ページ
+│   │   ├── recipes/
+│   │   │   └── page.tsx    // レシピ提案の答えが表示されるページ
 │   │   ├── preferences/
 │   │   │   └── page.tsx    // 料理の好みページ
-│   │   ├── recipes/
-│   │   │   └── page.tsx    // レシピの提案ページ
 │   │   └── settings/
 │   │       └── page.tsx    // ユーザー設定
 │   │
