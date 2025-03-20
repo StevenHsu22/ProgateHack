@@ -22,27 +22,27 @@ const handler =
             clientId: process.env.KEYCLOAK_CLIENT_ID!,
             clientSecret: process.env.KEYCLOAK_CLIENT_SECRET!,
             issuer: process.env.KEYCLOAK_ISSUER!,
+            authorization: {
+              params: {
+                scope: 'openid email profile',
+              },
+            },
           }),
         ],
         callbacks: {
           async jwt({ token, account }): Promise<JWT> {
-            console.log('JWT callback called');
-            console.log('Account:', account);
             if (account) {
               token.accessToken = account.access_token as string;
             }
             return token;
           },
           async session({ session, token }) {
-            console.log('Session callback called');
-            console.log('Token:', token);
             session.accessToken = token.accessToken as string;
             return session;
           },
           async signIn({ account, profile }) {
-            console.log('SignIn callback called');
             if (account && profile) {
-              return true; // サインイン成功
+              return true;
             }
             return true;
           },
