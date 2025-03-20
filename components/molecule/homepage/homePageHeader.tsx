@@ -9,7 +9,6 @@ const HomePageHeader: React.FC = () => {
       </h1>
       <nav className='flex gap-5 self-start  text-xl text-black whitespace-nowrap'>
         <LoginButton />
-        <SignupButton />
       </nav>
     </header>
   );
