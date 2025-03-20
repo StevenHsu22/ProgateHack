@@ -7,15 +7,15 @@ const HomePageFeatureSection: React.FC = () => {
       <div className='flex gap-5 max-md:flex-col'>
         <div className='w-[33%] max-md:ml-0 max-md:w-full'>
           <HomePageFeatureCard
-            title='サービス紹介'
+            title='簡単な使い方'
             
             content={
               <>
-                食材を登録する
+                ① 食材を登録  
                 <br />
-                AIがレシピを提案
+                ② 提案カートに追加  
                 <br />
-                美味しく消費して、廃棄ゼロへ
+                ③ AIにレシピをおまかせ 
               </>
             }
           />
@@ -37,12 +37,16 @@ const HomePageFeatureSection: React.FC = () => {
         </div>
         <div className='ml-5 w-[33%] max-md:ml-0 max-md:w-full'>
           <HomePageFeatureCard
-            title='デモ画像'
+            title='こんな方におすすめ'
             className='pt-36 pr-20 pb-52 pl-6 max-md:px-5 max-md:pb-24'
             content={
-              <div className='self-center mt-36 text-4xl font-black leading-tight text-center max-md:mt-10'>
-                写真
-              </div>
+              <>
+                🍱 献立の悩みを解決
+                <br />
+                📝 ムダを減らしてスマート管理
+                <br />
+                📈 食生活をもっと快適に
+              </>
             }
           />
         </div>

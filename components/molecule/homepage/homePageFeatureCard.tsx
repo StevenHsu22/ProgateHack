@@ -12,12 +12,18 @@ const HomePageFeatureCard: React.FC<HomePageCardProps> = ({
   className = '',
 }) => {
   return (
-    <Card className='h-full p-10 bg-yellow-700'>
+    <Card
+      className='min-h-[320px] p-6 text-white'
+      style={{ backgroundColor: '#796868' }}
+    >
       <article>
-        <h3 className='relative self-start text-3xl font-bold leading-none'>
-          {title}
-        </h3>
-        <div className='relative mt-24 text-2xl font-black leading-10 max-md:mt-10'>
+        <div className='inline-block'>
+          <h3 className='text-2xl font-bold leading-none text-white'>
+            {title}
+          </h3>
+          <div className='h-0.5 mt-2 mb-4 bg-white w-full' />
+        </div>
+        <div className='relative mt-15 text-l font-black leading-10 max-md:mt-10'>
           {content}
         </div>
       </article>
