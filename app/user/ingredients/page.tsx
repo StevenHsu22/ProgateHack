@@ -12,45 +12,57 @@ import { Ingredient } from '@/types/ingredients';
 import { selectedIngredientCartState } from '@/store/selectedIngredientCartState';
 import Link from 'next/link';
 
-const dummyData = [] as Ingredient[];
-
-for (let i = 0; i < 10; i++) {
-  dummyData.push({
-    id: i.toString(),
-    name: `トマト+${i}`,
-    quantity: 1,
-    unit: '個',
-    expirationDate: new Date('2022-12-31'),
-    createdAt: new Date(),
-    category: '野菜',
-    status: 'active',
-  });
-}
-for (let i = 10; i < 20; i++) {
-  dummyData.push({
-    id: i.toString(),
-    name: `牛肉${i}`,
-    quantity: 1,
-    unit: '個',
-    expirationDate: new Date('2022-12-31'),
-    createdAt: new Date(),
-    category: '肉',
-    status: 'active',
-  });
-}
+import { fetchIngredients, deleteIngredientApi } from '@/lib/api/ingredients';
 
 const IngredientsPage = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [tableDataIndex, setTableDataIndex] = useState(0);
-  const [tableShowData, setTableShowData] = useState([] as Ingredient[]);
+  const [tableShowData, setTableShowData] = useState<Ingredient[]>([]);
+  const [allIngredients, setAllIngredients] = useState<Ingredient[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const [selectedIngredients, setSelectedIngredients] = useAtom(
     selectedIngredientCartState
   );
 
   let numPerPage = 10;
+
+  // get食材
+  const loadIngredients = async () => {
+    try {
+      setLoading(true);
+      const data = await fetchIngredients();
+      setAllIngredients(data);
+      updateTableShowData(0, data);
+      setLoading(false);
+    } catch (err) {
+      setError('食材の読み込みに失敗しました');
+      setLoading(false);
+      console.error(err);
+    }
+  };
+
+  // delete食材
+  const deleteSelectedIngredients = async () => {
+    try {
+      setLoading(true);
+      await Promise.all(
+        selectedIngredients.map((ingredient) =>
+          deleteIngredientApi(ingredient.id!)
+        )
+      );
+      loadIngredients();
+      setSelectedIngredients([]);
+    } catch (err) {
+      setError('食材の削除に失敗しました');
+      setLoading(false);
+      console.error(err);
+    }
+  };
+
   const handleNext = () => {
-    if ((tableDataIndex + 1) * numPerPage < dummyData.length) {
+    if ((tableDataIndex + 1) * numPerPage < allIngredients.length) {
       setTableDataIndex(tableDataIndex + 1);
     }
   };
@@ -61,9 +73,9 @@ const IngredientsPage = () => {
     }
   };
 
-  const updateTableShowData = (index: number) => {
+  const updateTableShowData = (index: number, data = allIngredients) => {
     setTableShowData(
-      dummyData.slice(index * numPerPage, index * numPerPage + numPerPage)
+      data.slice(index * numPerPage, index * numPerPage + numPerPage)
     );
   };
 
@@ -71,10 +83,19 @@ const IngredientsPage = () => {
     setSelectedIngredients([]);
   };
 
+  // 新しい食材を追加した後にハンドルを更新する
+  const handleIngredientAdded = () => {
+    setIsOpen(false);
+    loadIngredients();
+  };
+
+  useEffect(() => {
+    loadIngredients();
+  }, []);
+
   useEffect(() => {
     updateTableShowData(tableDataIndex);
-    console.log(selectedIngredients);
-  }, [tableDataIndex]);
+  }, [tableDataIndex, allIngredients]);
 
   return (
     <div className='flex flex-col pt-4 h-full w-4/5 mx-auto bg-white rounded-xl shadow-lg p-6 overflow-auto'>
@@ -92,7 +113,10 @@ const IngredientsPage = () => {
               >
                 <div className='flex items-center gap-1 font-bold'>Clear</div>
               </Button>
-              <Button className=' hover:cursor-pointer bg-red-400 hover:bg-red-700 text-white size-12 w-18 mr-1'>
+              <Button
+                className=' hover:cursor-pointer bg-red-400 hover:bg-red-700 text-white size-12 w-18 mr-1'
+                onClick={deleteSelectedIngredients}
+              >
                 <div className='flex items-center gap-1'>
                   <Trash2 />
                 </div>
@@ -112,34 +136,53 @@ const IngredientsPage = () => {
       </div>
       <div className='border-t mx-3 my-2'></div>
       <div className=' w-full h-full'>
-        {isOpen && <AddNewIngredientModal onClose={() => setIsOpen(false)} />}
+        {isOpen && (
+          <AddNewIngredientModal
+            onClose={() => setIsOpen(false)}
+            onSuccess={handleIngredientAdded}
+          />
+        )}
         <div className='flex flex-col h-full w-full'>
-          <div className='w-full h-4/5'>
-            <IngredientsTable ingredients={tableShowData} />
-          </div>
-          <footer className='w-full h-1/5 flex flex-col justify-end gap-3 items-center'>
-            <div className='w-full flex justify-end items-center gap-2'>
-              <Button
-                className='bg-gray-400 cursor-pointer hover:bg-gray-500'
-                onClick={handlePrev}
-              >
-                <ChevronLeft />
-              </Button>
-              <span className='w-2.5'>{tableDataIndex + 1}</span>
-              <Button
-                className='bg-gray-400 cursor-pointer hover:bg-gray-500'
-                onClick={handleNext}
-              >
-                <ChevronRight />
-              </Button>
+          {loading ? (
+            <div className='flex justify-center items-center h-32'>
+              <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500'></div>
             </div>
-            <Button
-              disabled={selectedIngredients.length === 0}
-              className=' hover:cursor-pointer bg-blue-400 hover:bg-blue-800 text-white size-12 w-22 font-bold'
-            >
-              <Link href='/user/cart/'>レシピ提案</Link>
-            </Button>
-          </footer>
+          ) : error ? (
+            <div className='text-red-500 text-center'>{error}</div>
+          ) : (
+            <>
+              <div className='w-full h-4/5'>
+                <IngredientsTable ingredients={tableShowData} />
+              </div>
+              <footer className='w-full h-1/5 flex flex-col justify-end gap-3 items-center'>
+                <div className='w-full flex justify-end items-center gap-2'>
+                  <Button
+                    className='bg-gray-400 cursor-pointer hover:bg-gray-500'
+                    onClick={handlePrev}
+                    disabled={tableDataIndex === 0}
+                  >
+                    <ChevronLeft />
+                  </Button>
+                  <span className='w-2.5'>{tableDataIndex + 1}</span>
+                  <Button
+                    className='bg-gray-400 cursor-pointer hover:bg-gray-500'
+                    onClick={handleNext}
+                    disabled={
+                      (tableDataIndex + 1) * numPerPage >= allIngredients.length
+                    }
+                  >
+                    <ChevronRight />
+                  </Button>
+                </div>
+                <Button
+                  disabled={selectedIngredients.length === 0}
+                  className=' hover:cursor-pointer bg-blue-400 hover:bg-blue-800 text-white size-12 w-22 font-bold'
+                >
+                  <Link href='/user/cart/'>レシピ提案</Link>
+                </Button>
+              </footer>
+            </>
+          )}
         </div>
       </div>
     </div>

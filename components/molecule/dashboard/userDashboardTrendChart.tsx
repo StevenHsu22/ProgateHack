@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   LineChart,
@@ -8,18 +9,64 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from 'recharts';
-
-const trendData = [
-  { date: '4/1', 使用量: 10 },
-  { date: '4/2', 使用量: 15 },
-  { date: '4/3', 使用量: 8 },
-  { date: '4/4', 使用量: 12 },
-  { date: '4/5', 使用量: 18 },
-  { date: '4/6', 使用量: 20 },
-  { date: '4/7', 使用量: 14 },
-];
+import { fetchUsageTrends } from '@/lib/api/dashboard';
+import type { UsageTrend } from '@/lib/db/operations/dashboard';
 
 export default function UserDashboardTrendChart() {
+  // 使用トレンドデータの状態管理
+  const [trendData, setTrendData] = useState<UsageTrend[]>([]);
+  // ローディング状態
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  // エラー状態
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    // コンポーネントマウント時にデータを取得
+    const loadTrendData = async () => {
+      try {
+        setIsLoading(true);
+        const data = await fetchUsageTrends();
+        setTrendData(data);
+        setError(null);
+      } catch (err) {
+        setError('トレンドデータの読み込みに失敗しました');
+        console.error('トレンドデータの取得エラー:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadTrendData();
+  }, []);
+
+  // データ読み込み中の表示
+  if (isLoading) {
+    return (
+      <Card className='w-full'>
+        <CardHeader>
+          <CardTitle>食材の使用トレンド</CardTitle>
+        </CardHeader>
+        <CardContent className='h-60 flex items-center justify-center'>
+          <p>データを読み込み中...</p>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  // エラー発生時の表示
+  if (error) {
+    return (
+      <Card className='w-full'>
+        <CardHeader>
+          <CardTitle>食材の使用トレンド</CardTitle>
+        </CardHeader>
+        <CardContent className='h-60 flex items-center justify-center'>
+          <p className='text-red-500'>{error}</p>
+        </CardContent>
+      </Card>
+    );
+  }
+
   return (
     <Card className='w-full'>
       <CardHeader>

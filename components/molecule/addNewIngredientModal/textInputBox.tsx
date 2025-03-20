@@ -5,20 +5,26 @@ type inputType = 'text' | 'number' | 'date';
 interface TextInputBoxProps {
   label: string;
   placeholder: string;
-  type: inputType;
+  type: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const TextInputBox = ({
   label,
   placeholder,
   type,
-}: TextInputBoxProps) => {
+  value,
+  onChange,
+}:  TextInputBoxProps) => {
   return (
     <div className='flex flex-col gap-1 '>
       <label className=' font-bold text-xl'>{label}</label>
       <Input
-        placeholder={placeholder}
         type={type}
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
         className=' hover:border-blue-300'
       />
     </div>
