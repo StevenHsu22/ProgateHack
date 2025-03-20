@@ -31,10 +31,7 @@ const statusColor = (recipe: Recipe) => {
   }
 };
 
-export const RecipesTable = ({ 
-  recipes, 
-  onRemove
-}: RecipesTableProps) => {
+export const RecipesTable = ({ recipes, onRemove }: RecipesTableProps) => {
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
 
   const handleRemove = (id: string) => {
@@ -59,7 +56,7 @@ export const RecipesTable = ({
       month: '2-digit',
       day: '2-digit',
       hour: '2-digit',
-      minute: '2-digit'
+      minute: '2-digit',
     });
   };
 
@@ -97,22 +94,24 @@ export const RecipesTable = ({
                 </div>
               </TableCell>
               <TableCell>
-                <button 
+                <button
                   className={cn(
                     'px-3 py-1 rounded-md',
-                    isViewable(recipe.status) 
-                      ? 'bg-blue-500 text-white hover:bg-blue-600 cursor-pointer' 
+                    isViewable(recipe.status)
+                      ? 'bg-blue-500 text-white hover:bg-blue-600 cursor-pointer'
                       : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                   )}
-                  onClick={() => isViewable(recipe.status) && handleViewResult(recipe)}
+                  onClick={() =>
+                    isViewable(recipe.status) && handleViewResult(recipe)
+                  }
                   disabled={!isViewable(recipe.status)}
                 >
                   表示
                 </button>
               </TableCell>
               <TableCell>
-                <button 
-                  className='round-button click-transition' 
+                <button
+                  className='round-button click-transition cursor-pointer'
                   onClick={() => handleRemove(recipe.id)}
                 >
                   <Image
@@ -129,10 +128,7 @@ export const RecipesTable = ({
       </Table>
 
       {selectedRecipe && (
-        <RecipesModal 
-          recipe={selectedRecipe} 
-          onClose={closeModal} 
-        />
+        <RecipesModal recipe={selectedRecipe} onClose={closeModal} />
       )}
     </>
   );

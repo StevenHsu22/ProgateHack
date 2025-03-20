@@ -212,7 +212,7 @@ const RecipesPage = () => {
           </AlertDialogContent>
         </AlertDialog>
 
-        <div className='bg-white rounded-lg shadow-md overflow-hidden'>
+        <div className=''>
           <RecipesTable
             recipes={displayedRecipes}
             onRemove={handleRemoveRecipe}
@@ -221,10 +221,10 @@ const RecipesPage = () => {
           <div className='p-4 border-t flex justify-between items-center text-sm text-gray-500'>
             <span>
               {totalItems > 0
-                ? `${totalItems}件中 ${(currentPage - 1) * itemsPerPage + 1}-${Math.min(
+                ? `${totalItems} 件中 ${(currentPage - 1) * itemsPerPage + 1}-${Math.min(
                     currentPage * itemsPerPage,
                     totalItems
-                  )}件を表示`
+                  )} 件を表示`
                 : '表示するレシピがありません'}
             </span>
             <div className='flex space-x-2'>
