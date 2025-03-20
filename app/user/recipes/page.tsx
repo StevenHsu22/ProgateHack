@@ -1,13 +1,13 @@
-import { PageContainer } from '@/components/atom/pageContainer';
+import RecipesPage from '@/components/pages/RecipesPage';
 
-const RecipesPage = () => {
+const Recipes = () => {
   return (
-    <PageContainer>
-      <div className='w-3/4 max-w-6xl px-4'>
-        <h1>レシピを決める!</h1>
+    <div className='w-full h-[95%] max-w-9xl px-8 rounded-xl bg-white shadow-lg p-2.5 overflow-auto'>
+      <div className='flex flex-col pt-4 w-full h-full mx-auto  '>
+        <RecipesPage />
       </div>
-    </PageContainer>
+    </div>
   );
 };
 
-export default RecipesPage;
+export default Recipes;

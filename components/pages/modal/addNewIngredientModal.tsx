@@ -25,7 +25,7 @@ export const AddNewIngredientModal = ({
       ></div>
       <div className='relative w-1/2 h-4/5 bg-white rounded-xl shadow-lg p-6 overflow-auto'>
         <button
-          className='absolute top-4 right-4 text-gray-500 hover:text-gray-700'
+          className='absolute top-4 right-4 text-gray-500 hover:text-gray-700 hover:cursor-pointer'
           onClick={onClose}
         >
           <X />
@@ -62,7 +62,7 @@ export const AddNewIngredientModal = ({
           />
         </div>
         <div className='flex justify-end mt-4 '>
-          <Button className=' mt-10 mr-1 py-2 w-40 font-bold text-xl'>
+          <Button className=' mt-10 mr-1 py-2 w-40 font-bold text-xl hover:cursor-pointer bg-blue-400 hover:bg-blue-200 text-white '>
             追加
           </Button>
         </div>

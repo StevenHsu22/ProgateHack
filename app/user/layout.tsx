@@ -11,11 +11,19 @@ interface UserPageLayoutProps {
 const UserPageLayout = ({ children }: UserPageLayoutProps) => {
   return (
     <SessionProvider>
-      <div className='flex h-screen'>
-        <UserSidebarMenu />
-        <div className='flex flex-col flex-1'>
-          <UserPageHeader />
-          <main className='flex-1 p-6 bg-gray-100'>{children}</main>
+      <div className='flex h-screen overflow-hidden'>
+        <div className='fixed left-0 top-0 h-full w-64 bg-white shadow-sm'>
+          <UserSidebarMenu />
+        </div>
+
+        <div className='flex flex-col w-full pl-64'>
+          {' '}
+          <div className='fixed top-0 right-0 left-64 z-10'>
+            <UserPageHeader />
+          </div>
+          <main className='mt-16 flex-1 p-6 bg-gray-100 overflow-y-auto h-[calc(100vh-4rem)]'>
+            {children}
+          </main>
         </div>
       </div>
     </SessionProvider>

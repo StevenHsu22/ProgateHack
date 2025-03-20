@@ -19,10 +19,10 @@ export const SelectInput = ({
   selectItems,
 }: SelectInputProps) => {
   return (
-    <div className='flex flex-col gap-1'>
+    <div className='flex flex-col gap-1 '>
       <label className=' font-bold text-xl'>{selectLabelName}</label>
       <Select>
-        <SelectTrigger className='w-4/5 hover:border-blue-300'>
+        <SelectTrigger className='w-4/5 hover:border-blue-300 hover:cursor-pointer '>
           <SelectValue placeholder={selectTriggerName} />
         </SelectTrigger>
         <SelectContent>

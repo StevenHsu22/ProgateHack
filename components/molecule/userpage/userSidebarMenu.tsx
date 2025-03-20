@@ -2,13 +2,21 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, Home, Settings, BookOpen, PlusSquare } from 'lucide-react';
+import {
+  Home,
+  Salad,
+  ShoppingCart,
+  FileText,
+  Heart,
+  Settings,
+} from 'lucide-react';
 
 const menuItems = [
   { title: 'ダッシュボード', icon: Home, href: '/user/dashboard' },
-  { title: '食材管理', icon: BookOpen, href: '/user/ingredients' },
-  { title: 'レシピ提案', icon: PlusSquare, href: '/user/recipes' },
-  { title: '料理の好み', icon: BookOpen, href: '/user/preferences' },
+  { title: '食材管理', icon: Salad, href: '/user/ingredients' },
+  { title: '提案カート', icon: ShoppingCart, href: '/user/cart' },
+  { title: 'レシピ提案結果', icon: FileText, href: '/user/recipes' },
+  { title: '料理の好み', icon: Heart, href: '/user/preferences' },
 ];
 
 export const UserSidebarMenu = () => {
@@ -16,7 +24,7 @@ export const UserSidebarMenu = () => {
   const pathname = usePathname();
 
   return (
-    <aside className='flex flex-col h-screen bg-white shadow-lg w-52'>
+    <aside className='flex flex-col h-screen bg-white shadow-lg'>
       {/* Logo + Toggle */}
       <div className='flex items-center justify-center p-4 mt-4'>
         <Link href='/'>

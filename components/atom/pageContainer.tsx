@@ -8,12 +8,7 @@ interface pageContainerProps {
 
 export const PageContainer = ({ className, children }: pageContainerProps) => {
   return (
-    <div
-      className={cn(
-        'flex items-center justify-center h-[calc(100vh-80px)] ',
-        className
-      )}
-    >
+    <div className={cn('flex items-center justify-center] ', className)}>
       {children}
     </div>
   );
