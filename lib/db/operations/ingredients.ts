@@ -68,6 +68,7 @@ export async function saveIngredient(
   const result = await pool.query(query, values);
   return result.rows[0];
 
+  // シミュレーションバージョン
   console.log('simulating saving ingredient');
   const newIngredient = {
     ...ingredient,
@@ -106,6 +107,7 @@ export async function updateIngredient(
   const result = await pool.query(query, values);
   return result.rows[0];
 
+  // シミュレーションバージョン
   console.log('simulating updating ingredient');
   const index = dummyData.findIndex(
     (item) => item.id === ingredient.id && item.userId === ingredient.userId

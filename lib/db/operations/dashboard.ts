@@ -50,7 +50,7 @@ export async function getStatistics(userId: string): Promise<Statistics> {
     WHERE user_id = $1
     AND expiration_date IS NOT NULL
     AND expiration_date <= NOW() + INTERVAL '3 days'
-    AND expiration_date > NOW()
+    AND expiration_date >= CAST(NOW() AS DATE)
     AND status = 'active'
   `;
 
@@ -86,7 +86,7 @@ export async function getExpiringIngredients(userId: string): Promise<any[]> {
     WHERE user_id = $1
     AND expiration_date IS NOT NULL
     AND expiration_date <= NOW() + INTERVAL '3 days'
-    AND expiration_date > NOW()
+    AND expiration_date >= CAST(NOW() AS DATE)
     AND status = 'active'
     ORDER BY expiration_date ASC
   `;
