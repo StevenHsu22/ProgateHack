@@ -22,9 +22,10 @@ const statuses = ['作成中', '完了', '失敗'];
 
 // ダミーのレシピ内容（Markdown形式）
 const getDummyContent = (index: number) => {
-  if (index % 3 === 1) { // 完了のステータスにだけコンテンツを提供
+  if (index % 3 === 1) {
+    // 完了のステータスにだけコンテンツを提供
     const recipeNumber = Math.floor(index / 3) + 1;
-    
+
     if (index < 10) {
       return `
 # 春野菜の${recipeNumber}品レシピ
@@ -95,7 +96,7 @@ for (let i = 0; i < 10; i++) {
     createdAt: new Date(2024, 2, 20 - i), // 3月20日から順に日付を遡る
     status: statuses[statusIndex],
     description: `春の食材を使った簡単${i + 1}品レシピです。`,
-    content: getDummyContent(i)
+    content: getDummyContent(i),
   });
 }
 
@@ -107,7 +108,7 @@ for (let i = 10; i < 20; i++) {
     createdAt: new Date(2024, 2, 10 - (i - 10)), // 3月10日から順に日付を遡る
     status: statuses[statusIndex],
     description: `上質な和牛を使った贅沢${i - 9}品レシピです。`,
-    content: getDummyContent(i)
+    content: getDummyContent(i),
   });
 }
 
@@ -134,9 +135,7 @@ const RecipesPage = () => {
     // デモのために、ダミーデータをステータスでフィルタリング
     if (filterParams.status) {
       const filtered = dummyData.filter((item) =>
-        item.status
-          .toLowerCase()
-          .includes(filterParams.status.toLowerCase())
+        item.status.toLowerCase().includes(filterParams.status.toLowerCase())
       );
       setAllRecipes(filtered);
     } else {
@@ -153,9 +152,7 @@ const RecipesPage = () => {
   };
 
   const handleRemoveRecipe = (id: string) => {
-    const updatedRecipes = allRecipes.filter(
-      (recipe) => recipe.id !== id
-    );
+    const updatedRecipes = allRecipes.filter((recipe) => recipe.id !== id);
     setAllRecipes(updatedRecipes);
 
     // ページの最後のアイテムを削除する場合、前のページに移動（ページ1の場合を除く）
@@ -221,7 +218,9 @@ const RecipesPage = () => {
           <div className='p-4 border-t flex justify-between items-center text-sm text-gray-500'>
             <span>
               {totalItems > 0
-                ? `${totalItems} 件中 ${(currentPage - 1) * itemsPerPage + 1}-${Math.min(
+                ? `${totalItems} 件中 ${
+                    (currentPage - 1) * itemsPerPage + 1
+                  }-${Math.min(
                     currentPage * itemsPerPage,
                     totalItems
                   )} 件を表示`
@@ -231,7 +230,7 @@ const RecipesPage = () => {
               <button
                 onClick={() => handlePageChange(currentPage - 1)}
                 disabled={currentPage === 1}
-                className='p-2 border rounded-md disabled:opacity-50'
+                className='p-2 border rounded-md disabled:opacity-50 cursor-pointer'
               >
                 &lt;
               </button>
@@ -241,7 +240,7 @@ const RecipesPage = () => {
               <button
                 onClick={() => handlePageChange(currentPage + 1)}
                 disabled={currentPage >= totalPages || totalPages === 0}
-                className='p-2 border rounded-md disabled:opacity-50'
+                className='p-2 border rounded-md disabled:opacity-50 cursor-pointe'
               >
                 &gt;
               </button>

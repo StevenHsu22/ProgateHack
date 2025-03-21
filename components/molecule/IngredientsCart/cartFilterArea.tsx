@@ -119,7 +119,7 @@ export const CartFilter = ({ onApplyFilter }: CartFilterProps) => {
 
         <Button
           onClick={handleApplyFilter}
-          className='bg-blue-200 hover:bg-blue-600 text-white px-6 py-2 rounded-md self-end'
+          className='hover:bg-blue-600 bg-blue-400 text-white px-6 py-2 rounded-md self-end'
         >
           提案
         </Button>
