@@ -85,27 +85,27 @@ export async function saveIngredient(
 export async function updateIngredient(
   ingredient: Ingredient
 ): Promise<Ingredient> {
-  const query = `
-    UPDATE user_ingredients
-    SET name = $1, quantity = $2, unit = $3, expiration_date = $4,
-        category = $5, notes = $6, status = $7, used_at = $8, updated_at = CURRENT_TIMESTAMP
-    WHERE id = $9 AND user_id = $10
-    RETURNING *
-  `;
-  const values = [
-    ingredient.name,
-    ingredient.quantity,
-    ingredient.unit,
-    ingredient.expirationDate,
-    ingredient.category,
-    ingredient.notes,
-    ingredient.status || 'active',
-    ingredient.usedAt,
-    ingredient.id,
-    ingredient.userId,
-  ];
-  const result = await pool.query(query, values);
-  return result.rows[0];
+  // const query = `
+  //   UPDATE user_ingredients
+  //   SET name = $1, quantity = $2, unit = $3, expiration_date = $4,
+  //       category = $5, notes = $6, status = $7, used_at = $8, updated_at = CURRENT_TIMESTAMP
+  //   WHERE id = $9 AND user_id = $10
+  //   RETURNING *
+  // `;
+  // const values = [
+  //   ingredient.name,
+  //   ingredient.quantity,
+  //   ingredient.unit,
+  //   ingredient.expirationDate,
+  //   ingredient.category,
+  //   ingredient.notes,
+  //   ingredient.status || 'active',
+  //   ingredient.usedAt,
+  //   ingredient.id,
+  //   ingredient.userId,
+  // ];
+  // const result = await pool.query(query, values);
+  // return result.rows[0];
 
   // シミュレーションバージョン
   console.log('simulating updating ingredient');
@@ -132,11 +132,11 @@ export async function deleteIngredient(
   id: string,
   userId: string
 ): Promise<void> {
-  const query = `
-    DELETE FROM user_ingredients
-    WHERE id = $1 AND user_id = $2
-  `;
-  await pool.query(query, [id, userId]);
+  // const query = `
+  //   DELETE FROM user_ingredients
+  //   WHERE id = $1 AND user_id = $2
+  // `;
+  // await pool.query(query, [id, userId]);
   console.log('simulating deleting ingredients');
   return;
 }
