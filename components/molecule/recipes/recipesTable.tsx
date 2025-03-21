@@ -51,6 +51,11 @@ export const RecipesTable = ({ recipes, onRemove }: RecipesTableProps) => {
     setSelectedRecipe(null);
   };
 
+  const useIngredientFromRecipe = () => {
+    //TODO ここに処理を追加
+    closeModal();
+  };
+
   const formatDate = (date: Date) => {
     return date.toLocaleString('ja-JP', {
       year: 'numeric',
@@ -118,6 +123,7 @@ export const RecipesTable = ({ recipes, onRemove }: RecipesTableProps) => {
                       ? 'bg-blue-500 text-white hover:bg-blue-600 cursor-pointer'
                       : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                   )}
+                  onClick={useIngredientFromRecipe}
                 >
                   使用
                 </Button>
@@ -139,7 +145,11 @@ export const RecipesTable = ({ recipes, onRemove }: RecipesTableProps) => {
       </Table>
 
       {selectedRecipe && (
-        <RecipesModal recipe={selectedRecipe} onClose={closeModal} />
+        <RecipesModal
+          recipe={selectedRecipe}
+          onClose={closeModal}
+          onUse={useIngredientFromRecipe}
+        />
       )}
     </>
   );
