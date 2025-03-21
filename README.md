@@ -1,14 +1,13 @@
 頑張るぞ
 
-
 ## 目次
+
 1. [プロジェクトの起動方法](#プロジェクトの起動方法)
 2. [ディレクトリ構成](#ディレクトリ構成)
 
-
 ## プロジェクトの起動方法
 
-プロジェクトのパッケージをインストールするには、`pnpm i` を実行してください。
+プロジェクトのパッケージをインストールするには、`pnpm i`  を実行してください。
 
 ```bash
 pnpm i
@@ -19,7 +18,6 @@ pnpm i
 ```bash
 pnpm dev
 ```
-
 
 ## ディレクトリ構成
 
@@ -36,14 +34,14 @@ progatehack/
 │   │   │   └── page.tsx    // ログインページ
 │   │   └── register/
 │   │       └── page.tsx    // ユーザー登録ページ
-│   ├── user/					 
+│   ├── user/
 │   │   ├── layout.tsx      // ダッシュボードや食材一覧や追加・編集機能に共通のUI
 │   │   ├── page.tsx        // 登録後ページ
 │   │   ├── dashboard/
 │   │   │   └── page.tsx
 │   │   ├── ingredients/
 │   │   │   └── page.tsx    // 食材一覧＆管理ページ：追加・編集機能（モーダル）、登録済みの食材を一覧表示し、期限切れ警告なども表示
-│   │   ├── cart/           
+│   │   ├── cart/
 │   │   │   └── page.tsx    // レシピ提案前の設定ページ
 │   │   ├── recipes/
 │   │   │   └── page.tsx    // レシピ提案の答えが表示されるページ
@@ -70,18 +68,18 @@ progatehack/
 │       │   └── [ingredientId]/
 │       │       └── route.ts    // GET / PUT / DELETE 各食材の個別操作
 │       └── recipes/
-│           ├── route.ts        // GET /api/recipes（レシピ提案一覧）
+│           ├── route.ts        // GET /api/recipes（レシピ提案一覧） / POST /api/recipes（レシピIDをポストすると食材消費）
 │           └── [recipeId]/
 │               └── route.ts    // GET /api/recipes/:recipeId（個別レシピ詳細）
 │
 │　（他の）
 ├── components/
-│   ├── atom/                   // 
-│   ├── molecule/               // 
-│   │   ├── homepage/           // 
-│   │   └── userpage/           // 
-│   ├── pages/                  // 
-│   └── ui/                     // 
+│   ├── atom/                   //
+│   ├── molecule/               //
+│   │   ├── homepage/           //
+│   │   └── userpage/           //
+│   ├── pages/                  //
+│   └── ui/                     //
 │
 ├── public/
 │   ├── fonts/              // すべてのフォント
