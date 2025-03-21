@@ -1,5 +1,6 @@
 import { pool } from '../index';
 import { Recipe } from '@/types/recipes';
+import { Ingredient } from '@/types/ingredients';
 
 export async function getRecipes(userId: string): Promise<Recipe[]> {
   const query = `
@@ -111,6 +112,21 @@ export async function deleteRecipe(id: string, userId: string): Promise<void> {
     WHERE id = $1 AND user_id = $2
   `;
   await pool.query(query, [id, userId]);
+}
+
+export async function getRecipeIngredients(
+  recipeId: string
+): Promise<Ingredient[]> {
+  const query = `
+    SELECT ui.id, ui.name, ui.quantity, ui.unit, ui.expiration_date as "expirationDate", 
+           ui.category, ui.user_id as "userId", ui.created_at as "createdAt",
+           ui.updated_at as "updatedAt", ui.used_at as "usedAt", ui.status, ui.notes
+    FROM recipe_task_ingredients rti
+    JOIN user_ingredients ui ON rti.id = ui.id
+    WHERE rti.recipe_id = $1
+  `;
+  const result = await pool.query(query, [recipeId]);
+  return result.rows;
 }
 
 export async function getRecipeById(recipeId: string): Promise<Recipe | null> {
