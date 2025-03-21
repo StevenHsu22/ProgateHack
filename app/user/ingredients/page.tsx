@@ -2,7 +2,7 @@
 import { useEffect } from 'react';
 import Link from 'next/link';
 import { Plus, Trash2, ChevronLeft, ChevronRight } from 'lucide-react';
-
+import { Dialog } from '@/components/molecule/dialog';
 import { Button } from '@/components/ui/button';
 import { AddNewIngredientModal } from '@/components/pages/modal/addNewIngredientModal';
 import { IngredientsTable } from '@/components/molecule/Ingredients/ingredientsTable';
@@ -39,6 +39,7 @@ const IngredientsPage = () => {
 
   return (
     <div className='flex flex-col pt-4 h-full w-4/5 mx-auto bg-white rounded-xl shadow-lg p-6 overflow-auto'>
+      <Dialog />
       <div className='flex justify-between'>
         <h1 className='text-2xl font-bold w-1/3 pl-4'>食材管理</h1>
         <span className='pr-4 '>
