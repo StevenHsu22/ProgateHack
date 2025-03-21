@@ -2,7 +2,10 @@ import { NextResponse } from 'next/server';
 import {
   getRecipeById,
   getRecipeIngredients,
+  deleteRecipe,
 } from '@/lib/db/operations/recipes';
+
+const session = { user: { id: 'dummy-user-id' } };
 
 export async function GET({ params }: { params: { recipeId: string } }) {
   try {
@@ -59,6 +62,28 @@ export async function POST(
     console.error('Failed to update recipe ingredients:', error);
     return NextResponse.json(
       { error: 'Failed to update recipe ingredients' },
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(
+  request: Request,
+  { params }: { params: { recipeId: string } }
+) {
+  // const session = await getServerSession(authOptions);
+
+  // if (!session || !session.user) {
+  //   return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  // }
+
+  try {
+    await deleteRecipe(params.recipeId, session.user.id);
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error('Error deleting recipe:', error);
+    return NextResponse.json(
+      { error: 'Failed to delete recipe' },
       { status: 500 }
     );
   }

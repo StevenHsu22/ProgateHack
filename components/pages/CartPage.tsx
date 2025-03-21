@@ -24,6 +24,8 @@ const CartPage = () => {
 
   const displayedIngredients = getCurrentPageItems(ingredients);
 
+  const hasIngredients = ingredients.length > 0;
+  
   const setDialog = useShowDialog();
 
   const handleRemoveIngredient = (id: string) => {
@@ -104,7 +106,11 @@ const CartPage = () => {
         </div>
 
         <div className='mt-6'>
-          <CartFilter onApplyFilter={handleFilterApply} />
+          <CartFilter
+            onApplyFilter={handleFilterApply}
+            hasIngredients={hasIngredients}
+            ingredients={ingredients}
+          />
         </div>
       </div>
     </div>
