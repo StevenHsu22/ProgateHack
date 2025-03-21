@@ -5,6 +5,7 @@ import { Ingredient } from '@/types/ingredients';
 
 import { selectedIngredientCartState } from '@/store/selectedIngredientCartState';
 import { fetchIngredients, deleteIngredientApi } from '@/lib/api/ingredients';
+import { useShowDialog } from './useShowDialog';
 
 export const useIngredients = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,6 +14,8 @@ export const useIngredients = () => {
   const [allIngredients, setAllIngredients] = useState<Ingredient[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const setDialog = useShowDialog();
 
   const [selectedIngredients, setSelectedIngredients] = useAtom(
     selectedIngredientCartState
@@ -38,6 +41,13 @@ export const useIngredients = () => {
   // delete食材
   const deleteSelectedIngredients = async () => {
     try {
+      const confirm = await setDialog({
+        title: '削除確認',
+        content:
+          '選択した食材を削除してもよろしいですか？この操作は元に戻せません。',
+      });
+      if (!confirm) return;
+
       setLoading(true);
       await Promise.all(
         selectedIngredients.map((ingredient) =>
