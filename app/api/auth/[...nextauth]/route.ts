@@ -2,7 +2,6 @@ import NextAuth from 'next-auth';
 import KeycloakProvider from 'next-auth/providers/keycloak';
 import { NextResponse } from 'next/server';
 import { JWT } from 'next-auth/jwt';
-import '@/types/next-auth';
 
 // 開発モードではダミーのセッションを返す
 const handler =
