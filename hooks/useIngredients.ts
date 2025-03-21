@@ -1,53 +1,108 @@
-import { selectedIngredientCartState } from '@/store/selectedIngredientCartState';
+import { useState } from 'react';
 import { useAtom } from 'jotai';
 
-export const useIngredients = (itemsPerPage: number) => {
-  const [ingredients, setIngredients] = useAtom(selectedIngredientCartState);
+import { Ingredient } from '@/types/ingredients';
 
-  const removeIngredient = (
-    id: string,
-    currentPage: number,
-    setCurrentPage: (page: number) => void
-  ) => {
-    const updatedIngredients = ingredients.filter(
-      (ingredient) => ingredient.id !== id
-    );
-    setIngredients(updatedIngredients);
+import { selectedIngredientCartState } from '@/store/selectedIngredientCartState';
+import { fetchIngredients, deleteIngredientApi } from '@/lib/api/ingredients';
 
-    const newTotalPages = Math.ceil(updatedIngredients.length / itemsPerPage);
-    if (currentPage > newTotalPages && currentPage > 1) {
-      setCurrentPage(newTotalPages || 1);
+export const useIngredients = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [tableDataIndex, setTableDataIndex] = useState(0);
+  const [tableShowData, setTableShowData] = useState<Ingredient[]>([]);
+  const [allIngredients, setAllIngredients] = useState<Ingredient[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const [selectedIngredients, setSelectedIngredients] = useAtom(
+    selectedIngredientCartState
+  );
+
+  const numPerPage = 10;
+
+  // get食材
+  const loadIngredients = async () => {
+    try {
+      setLoading(true);
+      const data = await fetchIngredients();
+      setAllIngredients(data);
+      updateTableShowData(0, data);
+      setLoading(false);
+    } catch (err) {
+      setError('食材の読み込みに失敗しました');
+      setLoading(false);
+      console.error(err);
     }
   };
 
-  const updateQuantity = (id: string, quantity: number) => {
-    setIngredients(
-      ingredients.map((ingredient) =>
-        ingredient.id === id ? { ...ingredient, quantity } : ingredient
-      )
+  // delete食材
+  const deleteSelectedIngredients = async () => {
+    try {
+      setLoading(true);
+      await Promise.all(
+        selectedIngredients.map((ingredient) =>
+          deleteIngredientApi(ingredient.id!)
+        )
+      );
+      loadIngredients();
+      setSelectedIngredients([]);
+    } catch (err) {
+      setError('食材の削除に失敗しました');
+      setLoading(false);
+      console.error(err);
+    }
+  };
+
+  const handleNext = () => {
+    if ((tableDataIndex + 1) * numPerPage < allIngredients.length) {
+      setTableDataIndex(tableDataIndex + 1);
+    }
+  };
+
+  const handlePrev = () => {
+    if (tableDataIndex - 1 >= 0) {
+      setTableDataIndex(tableDataIndex - 1);
+    }
+  };
+
+  const updateTableShowData = (index: number, data = allIngredients) => {
+    setTableShowData(
+      data.slice(index * numPerPage, index * numPerPage + numPerPage)
     );
   };
 
   const clearAll = () => {
-    setIngredients([]);
+    setSelectedIngredients([]);
   };
 
-  const filterIngredients = (category: string) => {
-    if (!category) {
-      return;
-    }
-    const filtered = ingredients.filter((item) =>
-      item.category.toLowerCase().includes(category.toLowerCase())
-    );
-    setIngredients(filtered);
+  // 新しい食材を追加した後にハンドルを更新する
+  const handleIngredientAdded = () => {
+    setIsOpen(false);
+    loadIngredients();
   };
 
   return {
-    ingredients,
-    setIngredients,
-    removeIngredient,
-    updateQuantity,
+    isOpen,
+    setIsOpen,
+    tableDataIndex,
+    setTableDataIndex,
+    tableShowData,
+    setTableShowData,
+    allIngredients,
+    setAllIngredients,
+    loading,
+    setLoading,
+    error,
+    setError,
+    selectedIngredients,
+    setSelectedIngredients,
+    numPerPage,
+    loadIngredients,
+    deleteSelectedIngredients,
+    handleNext,
+    handlePrev,
+    updateTableShowData,
     clearAll,
-    filterIngredients,
+    handleIngredientAdded,
   };
 };

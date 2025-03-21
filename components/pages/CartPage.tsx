@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { usePagination } from '@/hooks/usePagination';
-import { useIngredients } from '@/hooks/useIngredients';
+import { useIngredientsCart } from '@/hooks/useIngredientsCart';
 
 import { IngredientsTable } from '../molecule/IngredientsCart/cartTable';
 import { CartFilter } from '../molecule/IngredientsCart/cartFilterArea';
@@ -20,8 +20,13 @@ import {
 
 const CartPage = () => {
   const itemsPerPage = 10;
-  const { ingredients, removeIngredient, updateQuantity, clearAll, filterIngredients } =
-    useIngredients(itemsPerPage);
+  const {
+    ingredients,
+    removeIngredient,
+    updateQuantity,
+    clearAll,
+    filterIngredients,
+  } = useIngredientsCart(itemsPerPage);
   const { currentPage, totalPages, handlePageChange, getCurrentPageItems } =
     usePagination(ingredients.length, itemsPerPage);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -89,7 +94,9 @@ const CartPage = () => {
           <div className='p-4 border-t flex justify-between items-center text-sm text-gray-500'>
             <span>
               {ingredients.length > 0
-                ? `${ingredients.length} 件中 ${(currentPage - 1) * itemsPerPage + 1}-${Math.min(
+                ? `${ingredients.length} 件中 ${
+                    (currentPage - 1) * itemsPerPage + 1
+                  }-${Math.min(
                     currentPage * itemsPerPage,
                     ingredients.length
                   )} 件を表示`
