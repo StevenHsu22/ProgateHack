@@ -7,20 +7,10 @@ import { IngredientsTable } from '../molecule/IngredientsCart/cartTable';
 import { CartFilter } from '../molecule/IngredientsCart/cartFilterArea';
 import { Button } from '@/components/ui/button';
 import { Trash2 } from 'lucide-react';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
+import { useShowDialog } from '@/hooks/useShowDialog';
 
 const CartPage = () => {
   const itemsPerPage = 10;
-
   const {
     ingredients,
     removeIngredient,
@@ -32,26 +22,29 @@ const CartPage = () => {
   const { currentPage, totalPages, handlePageChange, getCurrentPageItems } =
     usePagination(ingredients.length, itemsPerPage);
 
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-
   const displayedIngredients = getCurrentPageItems(ingredients);
+
   const hasIngredients = ingredients.length > 0;
+  
+  const setDialog = useShowDialog();
 
   const handleRemoveIngredient = (id: string) => {
     removeIngredient(id, currentPage, handlePageChange);
   };
 
-  const handleClearAll = () => {
-    clearAll();
-    setIsDialogOpen(false);
+  const openConfirmDialog = async () => {
+    const confirm = await setDialog({
+      title: '削除確認',
+      content:
+        'すべての食材を削除してもよろしいですか？この操作は元に戻せません。',
+    });
+
+    if (confirm) {
+      clearAll();
+    }
   };
 
-  const openConfirmDialog = () => {
-    setIsDialogOpen(true);
-  };
-
-  const handleFilterApply = (filterParams: any) => {
-    // The original filtering logic will remain the same
+  const handleFilterApply = (filterParams: { category?: string }) => {
     if (filterParams.category) {
       filterIngredients(filterParams.category);
     }
@@ -71,23 +64,6 @@ const CartPage = () => {
             </div>
           </Button>
         </div>
-
-        <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>削除確認</AlertDialogTitle>
-              <AlertDialogDescription>
-                すべての食材を削除してもよろしいですか？この操作は元に戻せません。
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>キャンセル</AlertDialogCancel>
-              <AlertDialogAction onClick={handleClearAll}>
-                削除を確認
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
 
         <div className='bg-white overflow-hidden'>
           <IngredientsTable
