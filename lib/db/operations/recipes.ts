@@ -23,9 +23,7 @@ export async function getRecipes(userId: string): Promise<Recipe[]> {
   return result.rows;
 }
 
-export async function saveRecipe(
-  recipe: Omit<Recipe, 'id' | 'createdAt'> & { user_id: string }
-): Promise<Recipe> {
+export async function saveRecipe(recipe: Recipe): Promise<Recipe> {
   const query = `
     INSERT INTO recipes 
     (user_id, recipes_name, people_count, meal_preference, cooking_time, 
@@ -45,7 +43,7 @@ export async function saveRecipe(
       created_at as "createdAt"
   `;
   const values = [
-    recipe.user_id,
+    recipe.userId,
     recipe.recipesName,
     recipe.peopleCount,
     recipe.mealPreference,
@@ -113,4 +111,10 @@ export async function deleteRecipe(id: string, userId: string): Promise<void> {
     WHERE id = $1 AND user_id = $2
   `;
   await pool.query(query, [id, userId]);
+}
+
+export async function getRecipeById(recipeId: string): Promise<Recipe | null> {
+  const query = 'SELECT * FROM recipes WHERE id = $1';
+  const { rows } = await pool.query(query, [recipeId]);
+  return rows[0] || null;
 }

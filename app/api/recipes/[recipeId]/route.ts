@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getRecipeById } from '../services/db';
+import { getRecipeById } from '@/lib/db/operations/recipes';
 
 export async function GET({ params }: { params: { recipeId: string } }) {
   try {
