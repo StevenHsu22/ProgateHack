@@ -2,6 +2,7 @@ import NextAuth from 'next-auth';
 import KeycloakProvider from 'next-auth/providers/keycloak';
 import { NextResponse } from 'next/server';
 import { JWT } from 'next-auth/jwt';
+import '@/types/next-auth';
 
 // 開発モードではダミーのセッションを返す
 const handler =
@@ -9,6 +10,7 @@ const handler =
     ? async (req: any) => {
         return NextResponse.json({
           user: {
+            id: 'dummy-user-id',
             name: 'サメチーム',
             email: 'test@test.com',
             image: null,
@@ -30,14 +32,16 @@ const handler =
           }),
         ],
         callbacks: {
-          async jwt({ token, account }): Promise<JWT> {
-            if (account) {
+          async jwt({ token, account, profile }): Promise<JWT> {
+            if (account && profile) {
               token.accessToken = account.access_token as string;
             }
             return token;
           },
           async session({ session, token }) {
-            session.accessToken = token.accessToken as string;
+            if (session.user) {
+              session.user.id = token.sub as string;
+            }
             return session;
           },
           async signIn({ account, profile }) {
