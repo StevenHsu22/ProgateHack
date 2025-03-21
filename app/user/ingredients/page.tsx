@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { useAtom } from 'jotai';
-
+import Link from 'next/link';
 import { Plus, Trash2, ChevronLeft, ChevronRight } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
@@ -10,84 +10,29 @@ import { IngredientsTable } from '@/components/molecule/Ingredients/ingredientsT
 import { Ingredient } from '@/types/ingredients';
 
 import { selectedIngredientCartState } from '@/store/selectedIngredientCartState';
-import Link from 'next/link';
 
 import { fetchIngredients, deleteIngredientApi } from '@/lib/api/ingredients';
+import { useIngredients } from '@/hooks/useIngredients';
 
 const IngredientsPage = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [tableDataIndex, setTableDataIndex] = useState(0);
-  const [tableShowData, setTableShowData] = useState<Ingredient[]>([]);
-  const [allIngredients, setAllIngredients] = useState<Ingredient[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  const [selectedIngredients, setSelectedIngredients] = useAtom(
-    selectedIngredientCartState
-  );
-
-  let numPerPage = 10;
-
-  // get食材
-  const loadIngredients = async () => {
-    try {
-      setLoading(true);
-      const data = await fetchIngredients();
-      setAllIngredients(data);
-      updateTableShowData(0, data);
-      setLoading(false);
-    } catch (err) {
-      setError('食材の読み込みに失敗しました');
-      setLoading(false);
-      console.error(err);
-    }
-  };
-
-  // delete食材
-  const deleteSelectedIngredients = async () => {
-    try {
-      setLoading(true);
-      await Promise.all(
-        selectedIngredients.map((ingredient) =>
-          deleteIngredientApi(ingredient.id!)
-        )
-      );
-      loadIngredients();
-      setSelectedIngredients([]);
-    } catch (err) {
-      setError('食材の削除に失敗しました');
-      setLoading(false);
-      console.error(err);
-    }
-  };
-
-  const handleNext = () => {
-    if ((tableDataIndex + 1) * numPerPage < allIngredients.length) {
-      setTableDataIndex(tableDataIndex + 1);
-    }
-  };
-
-  const handlePrev = () => {
-    if (tableDataIndex - 1 >= 0) {
-      setTableDataIndex(tableDataIndex - 1);
-    }
-  };
-
-  const updateTableShowData = (index: number, data = allIngredients) => {
-    setTableShowData(
-      data.slice(index * numPerPage, index * numPerPage + numPerPage)
-    );
-  };
-
-  const clearAll = () => {
-    setSelectedIngredients([]);
-  };
-
-  // 新しい食材を追加した後にハンドルを更新する
-  const handleIngredientAdded = () => {
-    setIsOpen(false);
-    loadIngredients();
-  };
+  const {
+    isOpen,
+    setIsOpen,
+    tableDataIndex,
+    tableShowData,
+    allIngredients,
+    loading,
+    error,
+    selectedIngredients,
+    updateTableShowData,
+    loadIngredients,
+    deleteSelectedIngredients,
+    handleNext,
+    handlePrev,
+    numPerPage,
+    handleIngredientAdded,
+    clearAll,
+  } = useIngredients();
 
   useEffect(() => {
     loadIngredients();
