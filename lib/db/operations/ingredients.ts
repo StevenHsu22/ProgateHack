@@ -68,10 +68,11 @@ export async function saveIngredient(
   // const result = await pool.query(query, values);
   // return result.rows[0];
 
+  // シミュレーションバージョン
   console.log('simulating saving ingredient');
   const newIngredient = {
     ...ingredient,
-    id: (dummyData.length + 1) + '',
+    id: dummyData.length + 1 + '',
     createdAt: new Date(),
     updatedAt: new Date(),
     status: ingredient.status || 'active',
@@ -106,6 +107,7 @@ export async function updateIngredient(
   // const result = await pool.query(query, values);
   // return result.rows[0];
 
+  // シミュレーションバージョン
   console.log('simulating updating ingredient');
   const index = dummyData.findIndex(
     (item) => item.id === ingredient.id && item.userId === ingredient.userId

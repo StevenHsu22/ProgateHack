@@ -10,8 +10,8 @@ export interface Statistics {
 
 // 使用トレンドデータの型定義
 export interface UsageTrend {
-  date: string;  // 日付 string
-  使用量: number; // 使用回数
+  date: string; // 日付 string
+  usageCount: number; // 使用回数
 }
 
 // よく使われる食材の型定義
@@ -39,34 +39,34 @@ const dummyStatistics: Statistics = {
  * @returns 食材総数、期限切れ間近の食材数、レシピ総数を含む統計オブジェクト
  */
 export async function getStatistics(userId: string): Promise<Statistics> {
-  // 実際のデータベースクエリバージョン
+  // 実際のデータベースクエリバージョン;
   // const ingredientsCountQuery = `
   //   SELECT COUNT(*) AS count FROM user_ingredients
   //   WHERE user_id = $1 AND status = 'active'
   // `;
-
+  //
   // const expiringIngredientsQuery = `
   //   SELECT COUNT(*) AS count FROM user_ingredients
   //   WHERE user_id = $1
   //   AND expiration_date IS NOT NULL
   //   AND expiration_date <= NOW() + INTERVAL '3 days'
-  //   AND expiration_date > NOW()
+  //   AND expiration_date >= CAST(NOW() AS DATE)
   //   AND status = 'active'
   // `;
-
+  //
   // const recipesCountQuery = `
   //   SELECT COUNT(*) AS count FROM recipes
   //   WHERE user_id = $1
   // `;
-
+  //
   // const ingredientsResult = await pool.query(ingredientsCountQuery, [userId]);
   // const expiringResult = await pool.query(expiringIngredientsQuery, [userId]);
   // const recipesResult = await pool.query(recipesCountQuery, [userId]);
-
+  //
   // return {
   //   ingredientsCount: parseInt(ingredientsResult.rows[0].count),
   //   expiringIngredients: parseInt(expiringResult.rows[0].count),
-  //   recipesCount: parseInt(recipesResult.rows[0].count)
+  //   recipesCount: parseInt(recipesResult.rows[0].count),
   // };
 
   // シミュレーションバージョン
@@ -86,11 +86,11 @@ export async function getExpiringIngredients(userId: string): Promise<any[]> {
   //   WHERE user_id = $1
   //   AND expiration_date IS NOT NULL
   //   AND expiration_date <= NOW() + INTERVAL '3 days'
-  //   AND expiration_date > NOW()
+  //   AND expiration_date >= CAST(NOW() AS DATE)
   //   AND status = 'active'
   //   ORDER BY expiration_date ASC
   // `;
-
+  //
   // const result = await pool.query(query, [userId]);
   // return result.rows;
 
@@ -164,11 +164,11 @@ export async function getUsageTrends(userId: string): Promise<UsageTrend[]> {
   //   GROUP BY DATE_TRUNC('day', used_at)
   //   ORDER BY date ASC
   // `;
-
+  //
   // const result = await pool.query(query, [userId]);
-  // return result.rows.map(row => ({
+  // return result.rows.map((row) => ({
   //   date: row.date,
-  //   usageCount: parseInt(row.usage_count)
+  //   usageCount: parseInt(row.usage_count),
   // }));
 
   // シミュレーションバージョン
@@ -182,14 +182,14 @@ export async function getUsageTrends(userId: string): Promise<UsageTrend[]> {
     const date = new Date();
     date.setDate(today.getDate() - i);
     date.setHours(0, 0, 0, 0);
-    
+
     const formattedDate = `${date.getMonth() + 1}/${date.getDate()}`;
-    
+
     const usageCount = Math.floor(Math.random() * 6);
-    
+
     trends.push({
       date: formattedDate,
-      使用量: usageCount,
+      usageCount: usageCount,
     });
   }
 
@@ -216,11 +216,11 @@ export async function getPopularIngredients(
   //   ORDER BY usage_count DESC
   //   LIMIT $2
   // `;
-
+  //
   // const result = await pool.query(query, [userId, limit]);
-  // return result.rows.map(row => ({
+  // return result.rows.map((row) => ({
   //   name: row.name,
-  //   usageCount: parseInt(row.usage_count)
+  //   usageCount: parseInt(row.usage_count),
   // }));
 
   // シミュレーションバージョン
@@ -256,11 +256,11 @@ export async function getCategoryDistribution(
   //   AND status = 'active'
   //   GROUP BY category
   // `;
-
+  //
   // const result = await pool.query(query, [userId]);
-  // return result.rows.map(row => ({
+  // return result.rows.map((row) => ({
   //   category: row.category,
-  //   count: parseInt(row.count)
+  //   count: parseInt(row.count),
   // }));
 
   // シミュレーションバージョン

@@ -1,12 +1,16 @@
 import { NextResponse } from 'next/server';
-import { getRecipes, saveRecipe, updateRecipe } from './services/db';
-import { RecipeSuggestionRequest } from '@/types/recipes';
-import { generateRecipeSuggestions } from './services/llm';
+import {
+  getRecipes,
+  saveRecipe,
+  updateRecipe,
+} from '@/lib/db/operations/recipes';
+import { RecipeSuggestionRequest, Recipe } from '@/types/recipes';
+import { generateRecipeSuggestions } from '@/lib/llm';
 
 // GET /api/recipes - レシピ一覧の取得
 export async function GET() {
   try {
-    const recipes = await getRecipes();
+    const recipes = await getRecipes('dummy-user-id');
     return NextResponse.json(recipes);
   } catch (error) {
     console.error('Failed to fetch recipes:', error);
@@ -24,13 +28,12 @@ export async function POST(request: Request) {
 
     // 初期値でレシピを保存
     const initialRecipe = {
-      id: crypto.randomUUID(),
-      name: body.recipesName,
+      ...body,
       status: '作成中',
       description: `${body.peopleCount}人分の${body.mealPreference}レシピを生成中...`,
       content: '',
-      createdAt: new Date(),
-    };
+      userId: body.userId,
+    } as Recipe;
 
     const savedRecipe = await saveRecipe(initialRecipe);
 
@@ -43,12 +46,17 @@ export async function POST(request: Request) {
             status: '完了',
             description: recipe.description,
             content: recipe.content,
+            user_id: body.userId,
+            userId: body.userId,
           });
         } else {
           await updateRecipe({
             ...savedRecipe,
             status: '失敗',
             description: 'レシピの生成に失敗しました。',
+            content: '',
+            user_id: body.userId,
+            userId: body.userId,
           });
         }
       })
@@ -56,8 +64,10 @@ export async function POST(request: Request) {
         console.error('Failed to generate recipe:', error);
         await updateRecipe({
           ...savedRecipe,
-          status: '失敗',
+          status: '失敗' as const,
           description: 'レシピの生成中にエラーが発生しました。',
+          user_id: body.userId,
+          userId: body.userId,
         });
       });
 
