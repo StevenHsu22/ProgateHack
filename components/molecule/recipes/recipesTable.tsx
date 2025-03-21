@@ -86,7 +86,7 @@ export const RecipesTable = ({ recipes, onRemove }: RecipesTableProps) => {
           {recipes.map((recipe) => (
             <TableRow key={recipe.id}>
               <TableCell>{formatDate(recipe.createdAt)}</TableCell>
-              <TableCell className='font-bold'>{recipe.name}</TableCell>
+              <TableCell className='font-bold'>{recipe.recipesName}</TableCell>
               <TableCell>
                 <div className='flex justify-center items-center'>
                   <div

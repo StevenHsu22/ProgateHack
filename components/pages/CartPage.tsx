@@ -20,6 +20,7 @@ import {
 
 const CartPage = () => {
   const itemsPerPage = 10;
+
   const {
     ingredients,
     removeIngredient,
@@ -27,11 +28,14 @@ const CartPage = () => {
     clearAll,
     filterIngredients,
   } = useIngredientsCart(itemsPerPage);
+
   const { currentPage, totalPages, handlePageChange, getCurrentPageItems } =
     usePagination(ingredients.length, itemsPerPage);
+
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const displayedIngredients = getCurrentPageItems(ingredients);
+  const hasIngredients = ingredients.length > 0;
 
   const handleRemoveIngredient = (id: string) => {
     removeIngredient(id, currentPage, handlePageChange);
@@ -46,7 +50,8 @@ const CartPage = () => {
     setIsDialogOpen(true);
   };
 
-  const handleFilterApply = (filterParams: { category?: string }) => {
+  const handleFilterApply = (filterParams: any) => {
+    // The original filtering logic will remain the same
     if (filterParams.category) {
       filterIngredients(filterParams.category);
     }
@@ -125,7 +130,11 @@ const CartPage = () => {
         </div>
 
         <div className='mt-6'>
-          <CartFilter onApplyFilter={handleFilterApply} />
+          <CartFilter
+            onApplyFilter={handleFilterApply}
+            hasIngredients={hasIngredients}
+            ingredients={ingredients}
+          />
         </div>
       </div>
     </div>

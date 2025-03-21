@@ -6,7 +6,7 @@ export interface RecipeSuggestionRequest {
   peopleCount?: number; // 人数
   mealPreference?: string; // 料理の好み（例：'和食'）
   cookingTime?: string; // 調理時間（例：'30分以内'）
-  allergies?: string; // アレルギー情報（例：'乳'）
+  allergies?: string[]; // アレルギー情報（例：'乳'）
   recipesName: string; // レシピ名（例：'晩ごはん提案'）
   otherConditions?: string; // その他の条件（例：'グルテンフリー'）
 }
