@@ -4,16 +4,8 @@ import { RecipesTable } from '../molecule/recipes/recipesTable';
 import { Recipe } from '@/types/recipes';
 import { Button } from '@/components/ui/button';
 import { Trash2 } from 'lucide-react';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
+
+import { useShowDialog } from '@/hooks/useShowDialog';
 
 const dummyData = [] as Recipe[];
 
@@ -118,7 +110,7 @@ const RecipesPage = () => {
   const [totalItems, setTotalItems] = useState(dummyData.length);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const setDialog = useShowDialog();
 
   useEffect(() => {
     // 表示するレシピを更新
@@ -167,11 +159,18 @@ const RecipesPage = () => {
   const handleClearAll = () => {
     setAllRecipes([]);
     setCurrentPage(1);
-    setIsDialogOpen(false);
   };
 
-  const openConfirmDialog = () => {
-    setIsDialogOpen(true);
+  const openConfirmDialog = async () => {
+    const confirm = await setDialog({
+      title: '削除確認',
+      content:
+        'すべてのレシピを削除してもよろしいですか？この操作は元に戻せません。',
+    });
+
+    if (confirm) {
+      handleClearAll();
+    }
   };
 
   // 総ページ数を計算
@@ -192,24 +191,7 @@ const RecipesPage = () => {
           </Button>
         </div>
 
-        <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>削除確認</AlertDialogTitle>
-              <AlertDialogDescription>
-                すべてのレシピを削除してもよろしいですか？この操作は元に戻せません。
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>キャンセル</AlertDialogCancel>
-              <AlertDialogAction onClick={handleClearAll}>
-                削除を確認
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
-
-        <div className=''>
+        <div>
           <RecipesTable
             recipes={displayedRecipes}
             onRemove={handleRemoveRecipe}

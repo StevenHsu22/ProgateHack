@@ -1,17 +1,12 @@
 'use client';
-import { useEffect, useState } from 'react';
-import { useAtom } from 'jotai';
+import { useEffect } from 'react';
 import Link from 'next/link';
 import { Plus, Trash2, ChevronLeft, ChevronRight } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { AddNewIngredientModal } from '@/components/pages/modal/addNewIngredientModal';
 import { IngredientsTable } from '@/components/molecule/Ingredients/ingredientsTable';
-import { Ingredient } from '@/types/ingredients';
 
-import { selectedIngredientCartState } from '@/store/selectedIngredientCartState';
-
-import { fetchIngredients, deleteIngredientApi } from '@/lib/api/ingredients';
 import { useIngredients } from '@/hooks/useIngredients';
 
 const IngredientsPage = () => {
