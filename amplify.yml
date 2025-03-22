@@ -1,0 +1,9 @@
+version: 1
+applications:
+  - appRoot: .
+    backend:
+      phases:
+        build:
+          commands:
+            - npm install -g pnpm
+            - pnpm install --frozen-lockfile
