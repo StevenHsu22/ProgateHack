@@ -78,10 +78,17 @@ export default function UserDashboardTrendChart() {
             <CartesianGrid strokeDasharray='3 3' />
             <XAxis dataKey='date' />
             <YAxis />
-            <Tooltip />
+            <Tooltip
+              formatter={(value: number, name: string) => {
+                const nameMap: Record<string, string> = {
+                  usageCount: '使用量',
+                };
+                return [value, nameMap[name] || name];
+              }}
+            />
             <Line
               type='monotone'
-              dataKey='使用量'
+              dataKey='usageCount'
               stroke='#3b82f6'
               strokeWidth={2}
               dot={{ r: 4 }}

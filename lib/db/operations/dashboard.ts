@@ -193,6 +193,7 @@ export async function getUsageTrends(userId: string): Promise<UsageTrend[]> {
     });
   }
 
+  console.log('トレンドデータ:', trends);
   return trends;
 }
 
